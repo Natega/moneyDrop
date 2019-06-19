@@ -6,7 +6,7 @@ export default class MoneyChanger extends Component{
     constructor(props) { //Constructeur 
         super(props); // j'appelle le constructeur de Component
         this.moneyChange = this.moneyChange.bind(this); // lier le `this` et permet de faire fonctionner la callback
-        this.amountChange = this.amountChange.bind(this); // il existe d'autre methode pour lier le this comme arrow function... 
+        this.amountChange = this.amountChange.bind(this); // il existe d'autre mécd thode pour lier le this comme arrow function... 
         this.state = {reference:'EUR', deviceSelected : 'USD', amountEuro : 1, convertData:{}, amountOutput:0}; // valeur par default du state !!! Cette fonction est asynchrone.
     }
     computeCurrency(convertcurrency,amountMoney){ // Faire la conversion nous avons besoin de connaitre la monnaie et la quantité en euro 
@@ -18,7 +18,7 @@ export default class MoneyChanger extends Component{
         e.preventDefault(); // stop la propagation de l'event (question de performance)
         let amountInitMoney = e.target.value; // recupere la somme en Eur dans l'event (e)
         let convertcurrency = this.convertcurrency.value; // recupere le type de monnaie
-        this.computeCurrency(convertcurrency,amountInitMoney); // faire le calcule 
+        this.computeCurrency(convertcurrency,amountInitMoney); // faire le calcul
     }
     moneyChange(e){ // même explication qu'au dessus 
         e.preventDefault();
@@ -26,15 +26,15 @@ export default class MoneyChanger extends Component{
         let convertcurrency = e.target.value;
         this.computeCurrency(convertcurrency,amountInitMoney);
     }
-    moneyLoader(){ // callback du fetch 
-        let amountInitMoney = this.initmoney.value; // utilise les refs de react permet de lier un composant html à une variable js 
+    moneyLoader(){ // callback du setState 
+        let amountInitMoney = this.initmoney.value; // utilise les refs de react : Permettant de lier un composant html à une variable js 
         let convertcurrency =  this.convertcurrency.value;
         this.computeCurrency(convertcurrency,amountInitMoney);
     }
     componentDidMount(){
-        var self = this; // permet d'utiliser le this dans les callback du fetch
+        var self = this; // permet d'utiliser le this dans les callbacks du fetch
         var myHeaders = new Headers(); // avoir des headers si besoin  
-        var myInit = { method: 'GET', // methode d'envoie de la requète GET POST UPDATE...
+        var myInit = { method: 'GET', // méthode d'envoie de la requète GET POST UPDATE...
                     headers: myHeaders // passer les headers
                     };
         /* On pourrait avoir une fonction pour générer les URLs*/
@@ -42,8 +42,8 @@ export default class MoneyChanger extends Component{
             .then(function(response) {
                 return response.json(); // convertir la response en JSON
             }).then(function(myDataApp) {
-                self.setState({convertData:myDataApp}, self.moneyLoader); // stocker dans le state : le resultat de la requète et ensuite appellé une callback pour mettre a jour la callback  OUI c'est asynchrone 
-                /** L'utilisation 'academique' est la suivante : c'est une difference d'état
+                self.setState({convertData:myDataApp}, self.moneyLoader); // stocker dans le state : le resultat de la requète et ensuite appeller une callback pour mettre à jour la callback => OUI c'est asynchrone 
+                /** L'utilisation 'academique' de setState est la suivante : c'est une difference d'état
                  *   this.setState(
                         (prevState, props) => ({ count: prevState.count + props.inc })
                         )
