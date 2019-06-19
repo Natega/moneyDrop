@@ -6,7 +6,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis,Tooltip,Legend } from 'rec
 */
 const data = [{name: '01-01-19', USD: 1.12, GBP: 0.83},{name: '01-03-19', USD: 1.14, GBP: 0.95}, {name: '01-05-19', USD: 1.19, GBP: 0.86}, {name: '01-07-19', USD: 1.6, GBP: 0.5} ];
 export default function chart(){
-        return (
+        return ( 
             <div> 
                 <center>
                     <h5> Change before it is too late!!!</h5>
