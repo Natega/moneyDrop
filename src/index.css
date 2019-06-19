@@ -1,3 +1,5 @@
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -5,8 +7,27 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background:white!important;
 }
-
+input {
+  text-align: right;
+}
+select > option {
+  text-align: right!important;
+  text-align-last:center;
+}
+.jumbotron{
+ background-image:url('./piggy-bank-2889042_1920.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  color:black;
+  background-color: pink!important;
+  border-radius:0px;
+  padding: 3rem 2rem!important;
+}
+nav{
+  background-color: pink!important;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
