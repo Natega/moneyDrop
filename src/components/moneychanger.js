@@ -6,30 +6,30 @@ export default class MoneyChanger extends Component{
     constructor(props) { //Constructeur 
         super(props); // j'appelle le constructeur de Component
         this.moneyChange = this.moneyChange.bind(this); // lier le `this` et permet de faire fonctionner la callback
-        this.amountChange = this.amountChange.bind(this); // il existe d'autre mécd thode pour lier le this comme arrow function... 
-        this.state = {reference:'EUR', deviceSelected : 'USD', amountEuro : 1, convertData:{}, amountOutput:0}; // valeur par default du state !!! Cette fonction est asynchrone.
+        this.amountChange = this.amountChange.bind(this); // il existe d'autre méthode pour lier le this comme arrow function... 
+        this.state = {reference:'EUR', deviceSelected : 'USD', amountInput : 1, convertData:{}, amountOutput:0}; // valeur par default du state !!! Cette fonction est asynchrone.
     }
-    computeCurrency(convertcurrency,amountMoney){ // Faire la conversion nous avons besoin de connaitre la monnaie et la quantité en euro 
-        let amountOutput = this.state.convertData.rates[convertcurrency] * amountMoney; // Valeur de la monnaie * la quantité d'argent en Eur
+    computeCurrency(currentCurrency,amountInput){ // Faire la conversion nous avons besoin de connaitre la monnaie et la quantité en euro 
+        let amountOutput = this.state.convertData.rates[currentCurrency] * amountInput; // Valeur de la monnaie * la quantité d'argent en Eur
         amountOutput = Math.round(amountOutput*100)/100; // Avoir 2 chiffres après la virgule 
-        this.setState({amountEuro: amountMoney, deviceSelected:convertcurrency, amountOutput:amountOutput}); //mettre à jour les states pour actualiser le modèle et dispatcher à la vue
+        this.setState({amountInput: amountInput, deviceSelected:currentCurrency, amountOutput:amountOutput}); //mettre à jour les states pour actualiser le modèle et dispatcher à la vue
     }
     amountChange(e){
         e.preventDefault(); // stop la propagation de l'event (question de performance)
-        let amountInitMoney = e.target.value; // recupere la somme en Eur dans l'event (e)
-        let convertcurrency = this.convertcurrency.value; // recupere le type de monnaie
-        this.computeCurrency(convertcurrency,amountInitMoney); // faire le calcul
+        let amountInput = e.target.value; // recupere la somme en Eur dans l'event (e)
+        let currentCurrency = this.currentCurrency.value; // recupere le type de monnaie
+        this.computeCurrency(currentCurrency,amountInput); // faire le calcul
     }
     moneyChange(e){ // même explication qu'au dessus 
         e.preventDefault();
-        let amountInitMoney = this.initmoney.value;
-        let convertcurrency = e.target.value;
-        this.computeCurrency(convertcurrency,amountInitMoney);
+        let amountInput = this.amountInput.value;
+        let currentCurrency = e.target.value;
+        this.computeCurrency(currentCurrency,amountInput);
     }
     moneyLoader(){ // callback du setState 
-        let amountInitMoney = this.initmoney.value; // utilise les refs de react : Permettant de lier un composant html à une variable js 
-        let convertcurrency =  this.convertcurrency.value;
-        this.computeCurrency(convertcurrency,amountInitMoney);
+        let amountInput = this.amountInput.value; // utilise les refs de react : Permettant de lier un composant html à une variable js 
+        let currentCurrency =  this.currentCurrency.value;
+        this.computeCurrency(currentCurrency,amountInput);
     }
     componentDidMount(){
         var self = this; // permet d'utiliser le this dans les callbacks du fetch
@@ -56,14 +56,14 @@ export default class MoneyChanger extends Component{
                  <Col md={3} >
                     <InputGroup>
                         {/** Utiliser innerRef plutot ref pour avoir les propriétes du composant c'est pas standard*/}
-                        <Input innerRef={(input) => {this.initmoney = input}} type='number' min='0'  onChange={this.amountChange} defaultValue={this.state.amountEuro}/>
+                        <Input innerRef={(input) => {this.amountInput = input}} type='number' min='0'  onChange={this.amountChange} defaultValue={this.state.amountInput}/>
                         <InputGroupAddon addonType="append">EUR</InputGroupAddon>
                     </InputGroup>
                 </Col>
                 <Col md={3}>
                     <InputGroup >
                         {/**Générer la liste de monnaie grace à la fonction map */}
-                        <Input  type="select" innerRef={(input) => {this.convertcurrency = input}} onChange={this.moneyChange}>
+                        <Input  type="select" innerRef={(input) => {this.currentCurrency = input}} onChange={this.moneyChange}>
                             {this.props.listOfCurrencies.map((el) => (
                                 <option key={el} value={el}>{el}</option>
                             ))}
